@@ -1,5 +1,5 @@
-import { DYNAMIC_PLUGIN, MODULE_CONFIGURATION } from '../constants'
-import { dynamicPluginConfig, moduleConfiguration } from '../types'
+import { DYNAMIC_PLUGIN, MODULE_CONFIGURATION, INTERCEPTOR } from '../constants'
+import { dynamicPluginConfig, moduleConfiguration, decisionInstaller, mergeErrorInstaller, checkDynamicModuleSuccessInstallType, interceptorCollectionTypes, installerCollectionTypes } from '../types'
 import { priority } from '../constants'
 import { middle } from '../utils'
 /**
@@ -177,4 +177,43 @@ export function setModuleConfig(target: Object, config: moduleConfiguration) {
  */
 export function getModuleConfig(target: Object): moduleConfiguration {
   return Reflect.getMetadata(MODULE_CONFIGURATION, target)
+}
+
+export function getTargetInstaller(target: Object): dynamicPluginConfig['installer'] {
+  return Reflect.getMetadata(INTERCEPTOR, target)
+}
+/**
+ * @description 绑定成功安装器
+ */
+export function bindingSuccessInstaller<T extends decisionInstaller.installReqSuc | decisionInstaller.installResSuc>(target: Object, type: T, fn: checkDynamicModuleSuccessInstallType<T>) {
+  Reflect.defineMetadata(
+    INTERCEPTOR,
+    {
+      ...getTargetInstaller(target),
+      [type]: fn,
+    },
+    target
+  )
+}
+/**
+ * @description 绑定错误安装器
+ */
+export function bindingErrorInstaller(target: Object, type: decisionInstaller.installReqFail | decisionInstaller.installResFail, fn: mergeErrorInstaller) {
+  Reflect.defineMetadata(
+    INTERCEPTOR,
+    {
+      ...getTargetInstaller(target),
+      [type]: fn,
+    },
+    target
+  )
+}
+
+/**
+ * @description 拦截器是否存在对应的安装器
+ */
+export function checkInterceptorCorrespondingInstaller(interceptor: interceptorCollectionTypes | undefined, installer: installerCollectionTypes | undefined): boolean {
+  // 拦截器存在 安装器不存在
+  if (interceptor && !installer) return false
+  return true
 }

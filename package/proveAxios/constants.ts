@@ -10,6 +10,8 @@ export const INTERCEPTOR = Symbol('interceptor')
 // 模块配置
 export const MODULE_CONFIGURATION = Symbol('moduleConfiguration')
 
+export const iNSTALLER = Symbol('Installer')
+
 // 优先级
 export enum priority {
   LOWEST = 'LOWEST',

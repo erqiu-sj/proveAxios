@@ -1,0 +1,13 @@
+{
+  "name": "@zealforchange/proveaxios",
+  "version": "1.0.3",
+  "main": "./dist/index.js",
+  "description": "",
+  "scripts": {},
+  "keywords": [
+    "axios",
+    "javascript"
+  ],
+  "author": "hooks_28",
+  "license": "MIT"
+}
