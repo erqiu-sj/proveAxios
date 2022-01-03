@@ -4,9 +4,8 @@ import {
     customConfiguration, initializationAxios,
     InitializeContainer, instanceAlias, interceptorsRequestSuccess, interceptorsResponseFail, interceptorsResponseSuccess,
     Module
-} from '../package/proveAxios/index'
-import { RetryAfterTimeout, retryAfterTimeoutOps } from '../package/retryAfterTimeout/src/index'
-
+} from '@zealforchange/proveaxios'
+import { RetryAfterTimeout, retryAfterTimeoutOps } from '@zealforchange/proveaxios/retryAfterTimeout'
 
 @Module([RetryAfterTimeout])
 @initializationAxios({

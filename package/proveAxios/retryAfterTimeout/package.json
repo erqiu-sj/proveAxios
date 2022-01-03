@@ -2,7 +2,9 @@
   "name": "retryaftertimeout",
   "version": "0.0.1",
   "description": "retry after timeout",
-  "main": "index.js",
+  "main": "./dist/src/index.js",
+  "module": "./lib/src/index.js",
+  "types": "./index.d.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },

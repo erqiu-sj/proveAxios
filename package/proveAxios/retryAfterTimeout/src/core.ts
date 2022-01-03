@@ -12,19 +12,15 @@ type checkFieldConf = {
 }
 
 export class RetryCore {
-
     private conf: config | unknown
-
     constructor(conf: config | unknown, instance?: AxiosInstance) {
         this.conf = conf
     }
-
     private checkField({ message, field }: checkFieldConf): this {
         const conf = this.conf as { config: customConfiguration<retryAfterTimeoutOps<object>> }
         if (!conf?.config?.[field]) throw new Error(message)
         return this
     }
-
     async runCallBack(cbKey: keyof Omit<retryAfterTimeoutOps<object>, 'numberOfRetries'>, payload?: any): Promise<this> {
         this.checkNumberOfRetries()
         const checkedConf = this.conf as config
@@ -32,7 +28,6 @@ export class RetryCore {
         await checkedConf?.config?.[cbKey]?.(payload)
         return this
     }
-
     async retryBeforeCbCb(): Promise<this> {
         this.checkNumberOfRetries()
         const checkedConf = this.conf as config
@@ -43,14 +38,11 @@ export class RetryCore {
             return this
         }
         return this
-
     }
-
     private setConf(params: config['config']) {
         if (!this.conf) throw new Error('the configuration cannot be empty');
         (this.conf as config).config = params
     }
-
     async retrying(): Promise<unknown> {
         const conf = this.conf as config
         const returnVal = []
@@ -62,7 +54,6 @@ export class RetryCore {
         }
         return returnVal[0]
     }
-
     private checkNumberOfRetries() {
         this.checkField({ field: 'numberOfRetries', message: "to retry numberOfRetries is required" })
     }

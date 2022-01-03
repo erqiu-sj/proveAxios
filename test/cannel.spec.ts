@@ -10,7 +10,7 @@ import {
 
 import { Cancel, HEADER_KEY } from '@zealforchange/proveaxios/cancel'
 
-import { AxiosRequestConfig, AxiosResponse, Cancel as AxiosCancelTypes } from 'axios'
+import { AxiosResponse, Cancel as AxiosCancelTypes } from 'axios'
 
 jest.setTimeout(100000)
 
