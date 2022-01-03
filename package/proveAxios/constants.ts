@@ -18,3 +18,12 @@ export enum priority {
   INTERMEDIATE = 'INTERMEDIATE',
   TOP = 'TOP',
 }
+
+export enum instanceAlias {
+  firstInstance,
+  secondInstance,
+  thirdInstance,
+  fourthInstance,
+  fifthInstance,
+  sixthInstance,
+}

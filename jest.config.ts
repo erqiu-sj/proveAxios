@@ -1,5 +1,5 @@
-import type {InitialOptionsTsJest} from 'ts-jest/dist/types'
-import {defaults as tsjPrese} from 'ts-jest/presets'
+import type { InitialOptionsTsJest } from 'ts-jest/dist/types'
+import { defaults as tsjPrese } from 'ts-jest/presets'
 
 const config: InitialOptionsTsJest = {
     transform: {

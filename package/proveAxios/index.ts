@@ -1,4 +1,4 @@
-import { initializationAxios } from './instance'
+import { initializationAxios, customConfiguration } from './instance'
 import {
   interceptorsResponseSuccess,
   interceptorsResponseFail,
@@ -11,9 +11,11 @@ import {
   dynamicModuleSuccessInstall,
 } from './core'
 import { instanceConfig, dynamicPluginConfig, decisionInstaller, mergeSuccessfulInstaller, mergeErrorInstaller, checkDynamicModuleSuccessInstallType } from './types'
-import { priority } from './constants'
+import { priority, instanceAlias } from './constants'
 import type { initializeContainerProps, interceptorsRequestFailTypes, interceptorsResponseFailTypes, interceptorsRequestSuccessTypes, interceptorsResponseSuccessTypes } from './core'
+
 export {
+  instanceAlias,
   priority,
   initializationAxios,
   interceptorsResponseSuccess,
@@ -29,6 +31,7 @@ export {
 }
 
 export type {
+  customConfiguration,
   interceptorsRequestFailTypes,
   interceptorsResponseFailTypes,
   interceptorsRequestSuccessTypes,

@@ -1,16 +1,18 @@
 {
-  "name": "cancel",
-  "version": "1.0.0",
-  "description": "cannel http",
+  "name": "retryaftertimeout",
+  "version": "0.0.1",
+  "description": "retry after timeout",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
-    "axios",
-    "module",
     "http",
-    "typescript"
+    "axios",
+    "javascript",
+    "typescript",
+    "retry",
+    "timeout"
   ],
   "author": "hooks_28",
   "license": "MIT"

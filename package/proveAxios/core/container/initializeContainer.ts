@@ -1,13 +1,12 @@
 import { AxiosInstance } from 'axios'
-import { InitializeContainerUtils } from './InitializeContainerUtils'
-import { filterEmptyInterceptorReturns } from './InitializeContainerUtils'
+import { filterEmptyInterceptorReturns, InitializeContainerUtils } from './InitializeContainerUtils'
 export interface initializeContainerProps<C = any> {
   containerList: C[]
 }
 export class InitializeContainer extends InitializeContainerUtils {
   protected instanceList: filterEmptyInterceptorReturns[] = []
 
-  collect(List: initializeContainerProps['containerList']) {
+  collect(List: initializeContainerProps['containerList']): this {
     this.instanceList = this.bindingInterceptor(this.filterEmptyInterceptor(this.checkTheInstaller(this.initializationList(List))))
     return this
   }

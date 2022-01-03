@@ -7,7 +7,7 @@ import { middle } from '../utils'
  * @param target
  * @param conf
  */
-export function setDynamicPlugin(target: Object, conf: dynamicPluginConfig) {
+export function setDynamicPlugin(target: Object, conf: dynamicPluginConfig<object>) {
   Reflect.defineMetadata(DYNAMIC_PLUGIN, conf, target)
 }
 /**
@@ -15,7 +15,7 @@ export function setDynamicPlugin(target: Object, conf: dynamicPluginConfig) {
  * @param target
  * @returns
  */
-export function getDynamicPluginConfig(target: Object): dynamicPluginConfig {
+export function getDynamicPluginConfig(target: Object): dynamicPluginConfig<object> {
   return Reflect.getMetadata(DYNAMIC_PLUGIN, target)
 }
 /**
@@ -179,13 +179,13 @@ export function getModuleConfig(target: Object): moduleConfiguration {
   return Reflect.getMetadata(MODULE_CONFIGURATION, target)
 }
 
-export function getTargetInstaller(target: Object): dynamicPluginConfig['installer'] {
+export function getTargetInstaller(target: Object): dynamicPluginConfig<object>['installer'] {
   return Reflect.getMetadata(INTERCEPTOR, target)
 }
 /**
  * @description 绑定成功安装器
  */
-export function bindingSuccessInstaller<T extends decisionInstaller.installReqSuc | decisionInstaller.installResSuc>(target: Object, type: T, fn: checkDynamicModuleSuccessInstallType<T>) {
+export function bindingSuccessInstaller<T extends decisionInstaller.installReqSuc | decisionInstaller.installResSuc, C extends object>(target: Object, type: T, fn: checkDynamicModuleSuccessInstallType<T, C>) {
   Reflect.defineMetadata(
     INTERCEPTOR,
     {
@@ -212,7 +212,7 @@ export function bindingErrorInstaller(target: Object, type: decisionInstaller.in
 /**
  * @description 拦截器是否存在对应的安装器
  */
-export function checkInterceptorCorrespondingInstaller(interceptor: interceptorCollectionTypes | undefined, installer: installerCollectionTypes | undefined): boolean {
+export function checkInterceptorCorrespondingInstaller(interceptor: interceptorCollectionTypes | undefined, installer: installerCollectionTypes<object> | undefined): boolean {
   // 拦截器存在 安装器不存在
   if (interceptor && !installer) return false
   return true

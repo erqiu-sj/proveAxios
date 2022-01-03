@@ -1,12 +1,12 @@
 import 'reflect-metadata'
 import { interceptorsKey } from '../types'
-import { AxiosRequestConfig } from 'axios'
 import { createInterceptorsKey } from '../utils'
+import { customConfiguration } from '../instance'
 
-export type interceptorsRequestSuccessTypes = (conf: AxiosRequestConfig) => AxiosRequestConfig
+export type interceptorsRequestSuccessTypes<C extends object> = (conf: customConfiguration<C>) => customConfiguration<C>
 
-export function interceptorsRequestSuccess<D>() {
-  return (target: Function, key: string, desc: TypedPropertyDescriptor<interceptorsRequestSuccessTypes>) => {
+export function interceptorsRequestSuccess<C extends object>() {
+  return (target: Function, key: string, desc: TypedPropertyDescriptor<interceptorsRequestSuccessTypes<C>>) => {
     createInterceptorsKey(target, desc.value as Function, interceptorsKey.interceptorsRequestSuccess)
     return desc
   }

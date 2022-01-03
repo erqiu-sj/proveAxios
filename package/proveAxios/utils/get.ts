@@ -1,14 +1,14 @@
-import { AxiosRequestConfig } from 'axios'
-import { instanceConfig, interceptorsKey, dynamicPluginConfig } from '../types'
-import { interceptorsRequestFailTypes, interceptorsResponseFailTypes, interceptorsRequestSuccessTypes, interceptorsResponseSuccessTypes } from '../core'
-import { PARTIAL_INSTANCE, DYNAMIC_PLUGIN } from '../constants'
 import { getInterceptorsKey } from '.'
+import { PARTIAL_INSTANCE } from '../constants'
+import { interceptorsRequestFailTypes, interceptorsRequestSuccessTypes, interceptorsResponseFailTypes, interceptorsResponseSuccessTypes } from '../core'
+import { customConfiguration } from '../instance'
+import { instanceConfig, interceptorsKey } from '../types'
 /**
  * @description 获取实例配置
  * @param target
  * @returns
  */
-export function getLocalInstance(target: Object): instanceConfig {
+export function getLocalInstance(target: Object): instanceConfig<object> {
   return Reflect.getMetadata(PARTIAL_INSTANCE, target)
 }
 /**
@@ -17,14 +17,14 @@ export function getLocalInstance(target: Object): instanceConfig {
  * @param conf
  * @returns
  */
-export function setLocalInstanceConfig(target: Object, conf?: AxiosRequestConfig) {
+export function setLocalInstanceConfig(target: Object, conf?: customConfiguration<object>) {
   const getInstance = getLocalInstance(target)
   Reflect.defineMetadata(
     PARTIAL_INSTANCE,
     {
       ...getInstance,
       config: conf,
-    } as instanceConfig,
+    } as instanceConfig<object>,
     target
   )
 }
@@ -35,14 +35,14 @@ export function setLocalInstanceConfig(target: Object, conf?: AxiosRequestConfig
  * @param conf
  * @returns
  */
-export function setInterceptor(target: Object, conf: instanceConfig['interceptor']): instanceConfig['interceptor'] {
+export function setInterceptor(target: Object, conf: instanceConfig<object>['interceptor']): instanceConfig<object>['interceptor'] {
   const getInstance = getLocalInstance(target)
   Reflect.defineMetadata(
     PARTIAL_INSTANCE,
     {
       ...getInstance,
       interceptor: { ...conf },
-    } as instanceConfig,
+    } as instanceConfig<object>,
     target
   )
   return conf
@@ -52,10 +52,10 @@ export function setInterceptor(target: Object, conf: instanceConfig['interceptor
  * @description 收集拦截器
  * @param target
  */
-export function collectionInterceptor(target: Object): instanceConfig['interceptor'] {
+export function collectionInterceptor(target: Object): instanceConfig<object>['interceptor'] {
   return setInterceptor(target, {
     request: {
-      successCb: getInterceptorsKey<interceptorsRequestSuccessTypes>(target, interceptorsKey.interceptorsRequestSuccess),
+      successCb: getInterceptorsKey<interceptorsRequestSuccessTypes<object>>(target, interceptorsKey.interceptorsRequestSuccess),
       failCb: getInterceptorsKey<interceptorsRequestFailTypes>(target, interceptorsKey.interceptorsRequestFail),
     },
     response: {

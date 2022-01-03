@@ -1,13 +1,28 @@
 {
   "name": "@zealforchange/proveaxios",
-  "version": "1.0.3",
+  "version": "1.0.8",
   "main": "./dist/index.js",
   "description": "",
   "scripts": {},
+  "files": [
+    "dist/",
+    "index.d.ts"
+  ],
+  "dependencies": {
+    "axios": "^0.24.0",
+    "reflect-metadata": "^0.1.13"
+  },
   "keywords": [
     "axios",
-    "javascript"
+    "javascript",
+    "decorator",
+    "module",
+    "typescript",
+    "http"
   ],
+  "peerDependencies": {
+    "axios": "^0.24.0"
+  },
   "author": "hooks_28",
   "license": "MIT"
 }

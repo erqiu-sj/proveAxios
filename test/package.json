@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "@zealforchange/proveaxios": "1.0.1"
+    "@zealforchange/proveaxios": "1.0.6"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

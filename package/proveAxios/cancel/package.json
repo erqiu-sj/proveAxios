@@ -1,0 +1,28 @@
+{
+  "name": "@zealforchange/cancel",
+  "version": "1.0.0",
+  "private": false,
+  "description": "cannel http",
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./index.d.ts",
+  "dependencies": {
+    "@zealforchange/proveaxios": "1.0.6"
+  },
+  "files": [
+    "dist/",
+    "index.d.ts"
+  ],
+  "scripts": {},
+  "keywords": [
+    "axios",
+    "module",
+    "http",
+    "typescript"
+  ],
+  "peerDependencies": {
+    "axios": "^0.24.0"
+  },
+  "author": "hooks_28",
+  "license": "MIT"
+}
