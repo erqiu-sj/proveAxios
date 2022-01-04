@@ -24,3 +24,5 @@ until his appearance --- proveAxios
 
 - [Best Practice 1 - How to elegantly configure to cancel repeated requests?](/docs/cancel.md)
 - [Best Practice 2 - How to configure retry requests gracefully]()
+
+[中文文档](/docs/README_CN.md)
