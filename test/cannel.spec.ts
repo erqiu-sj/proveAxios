@@ -1,9 +1,6 @@
 import {
     initializationAxios,
     InitializeContainer,
-    interceptorsRequestFail,
-    interceptorsRequestSuccess,
-    interceptorsResponseFail,
     interceptorsResponseSuccess,
     Module
 } from '@zealforchange/proveaxios'
@@ -22,17 +19,9 @@ jest.setTimeout(100000)
     },
 })
 class CheckAxios {
-    @interceptorsRequestFail()
-    static reqFail(err: any) {
-    }
-
     @interceptorsResponseSuccess()
     static response(res: AxiosResponse) {
         return Promise.resolve(res.data)
-    }
-
-    @interceptorsResponseFail()
-    static resFail(err: AxiosCancelTypes) {
     }
 }
 
