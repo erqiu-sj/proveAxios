@@ -31,4 +31,4 @@ g.get(0).get('/weaknet/delay', { data: { mark: 'start' } })
 g.get(0).get('/weaknet/delay', { data: { mark: 'end' } }) // This request will cancel the request with mark === ‘start’
 ```
 
-[Test case]("/test/cannel.spec.ts")
+[Test case](/test/cannel.spec.ts)

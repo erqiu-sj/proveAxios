@@ -31,4 +31,4 @@ g.get(0).get('/weaknet/delay', { data: { mark: 'start' } })
 g.get(0).get('/weaknet/delay', { data: { mark: 'end' } }) // 该请求会取消mark === ‘start’的那一次请求
 ```
 
-[测试用例]("/test/cannel.spec.ts")
+[测试用例](/test/cannel.spec.ts)
