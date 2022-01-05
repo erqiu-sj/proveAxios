@@ -13,11 +13,11 @@ var AxiosCanceler = (function () {
         var url = getPendingUrl(config);
         config.cancelToken =
             config.cancelToken ||
-            new axios.CancelToken(function (cancel) {
-                if (!pendingMap.has(url)) {
-                    pendingMap.set(url, cancel);
-                }
-            });
+                new axios.CancelToken(function (cancel) {
+                    if (!pendingMap.has(url)) {
+                        pendingMap.set(url, cancel);
+                    }
+                });
     };
     AxiosCanceler.prototype.removeAllPending = function () {
         pendingMap.forEach(function (cancel) {

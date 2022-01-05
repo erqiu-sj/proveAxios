@@ -11,11 +11,12 @@ import { Cancel, HEADER_KEY } from '@zealforchange/proveaxios/cancel'
 // The plugin will determine that when the request header with HEADER_KEY and there are multiple identical request headers, it will cancel all previous requests and only make the last request valid
 
 // This is closely related to the writing method. When using async await, the plugin will be invalid, because each request will wait for the response of the previous request before sending the request, which does not satisfy the condition that multiple identical requests are issued at the same time.
-@Module([Cancel]) // 将Cancel插件安装
+
+@Module([Cancel]) // install cancel
 @initializationAxios({
   baseURL: 'http://localhost:3000',
   headers: {
-    HEADER_KEY,
+    [HEADER_KEY]: HEADER_KEY,
   },
 })
 class CancelAxios {

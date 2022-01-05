@@ -4,10 +4,9 @@ import {
     interceptorsResponseSuccess,
     Module
 } from '@zealforchange/proveaxios'
-
 import { Cancel, HEADER_KEY } from '@zealforchange/proveaxios/cancel'
 
-import { AxiosResponse, Cancel as AxiosCancelTypes } from 'axios'
+import { AxiosResponse } from 'axios'
 
 jest.setTimeout(100000)
 
@@ -15,7 +14,7 @@ jest.setTimeout(100000)
 @initializationAxios({
     baseURL: 'http://localhost:3000',
     headers: {
-        HEADER_KEY,
+        [HEADER_KEY]: HEADER_KEY,
     },
 })
 class CheckAxios {

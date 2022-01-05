@@ -25,7 +25,7 @@ export class Cancel {
 
   @dynamicModuleSuccessInstall(decisionInstaller.installReqSuc)
   static reqInstaller(conf: AxiosRequestConfig) {
-    const checkHasHeader = Reflect.has(conf.headers as {}, 'HEADER_KEY')
+    const checkHasHeader = Reflect.has(conf.headers as {}, HEADER_KEY)
     return checkHasHeader
   }
 }

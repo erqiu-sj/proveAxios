@@ -15,7 +15,7 @@ import { Cancel, HEADER_KEY } from '@zealforchange/proveaxios/cancel'
 @initializationAxios({
   baseURL: 'http://localhost:3000',
   headers: {
-    HEADER_KEY,
+    [HEADER_KEY]: HEADER_KEY,
   },
 })
 class CancelAxios {
