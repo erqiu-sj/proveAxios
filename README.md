@@ -26,4 +26,9 @@ until his appearance --- proveAxios
 
 - [Best Practice 2 - How to configure retry requests gracefully](/docs/retry.md)
 
-[中文文档](/docs/README_CN.md)
+- [list of decorators](/docs/decoratores.md)
+
+- [How to write a plugin]()
+
+  [learn more](/docs/learnMore.md)
+  [中文文档](/docs/README_CN.md)

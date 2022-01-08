@@ -26,7 +26,6 @@ class CheckAxios {
     static async responseFail(err: any) {
         return err
     }
-
 }
 
 const g = new InitializeContainer().collect([CheckAxios])
@@ -67,4 +66,3 @@ it('time out five', async () => {
     )
     expect(res?.data).toBeUndefined()
 })
-
