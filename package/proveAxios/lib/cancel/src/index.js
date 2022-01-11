@@ -25,7 +25,7 @@ var Cancel = /** @class */ (function () {
         return true;
     };
     Cancel.reqInstaller = function (conf) {
-        var checkHasHeader = Reflect.has(conf.headers, 'HEADER_KEY');
+        var checkHasHeader = Reflect.has(conf.headers, HEADER_KEY);
         return checkHasHeader;
     };
     __decorate([
