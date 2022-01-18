@@ -10,6 +10,7 @@ import {
   dynamicModuleErrorInstall,
   dynamicModuleSuccessInstall,
 } from './core'
+
 import { instanceConfig, dynamicPluginConfig, decisionInstaller, mergeSuccessfulInstaller, mergeErrorInstaller, checkDynamicModuleSuccessInstallType } from './types'
 import { priority, instanceAlias } from './constants'
 import type { initializeContainerProps, interceptorsRequestFailTypes, interceptorsResponseFailTypes, interceptorsRequestSuccessTypes, interceptorsResponseSuccessTypes } from './core'

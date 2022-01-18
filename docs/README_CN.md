@@ -28,6 +28,6 @@ or
 
 - [装饰器列表](/docs/decoratores_CN.md)
 
-- [如何编写一个插件]()
+- [如何编写一个插件](/docs/learnPlugin_CN.md)
 
 [学到更多](/docs/learnMore_CN.md)
