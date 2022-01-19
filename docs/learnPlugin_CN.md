@@ -37,3 +37,5 @@ Axios.interceptors -> plugin installer -> high priority plugin ->  Axios.interce
 ## dynamicModuleErrorInstall
 
 > 请求或响应失败安装器
+
+[插件最佳实践-Cancel](../package/proveAxios/cancel/src/index.ts)
