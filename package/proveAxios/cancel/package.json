@@ -7,7 +7,7 @@
   "module": "./dist/index.js",
   "types": "./index.d.ts",
   "dependencies": {
-    "@zealforchange/proveaxios": "1.0.9"
+    "@zealforchange/proveaxios": "1.1.4"
   },
   "files": [
     "dist/",

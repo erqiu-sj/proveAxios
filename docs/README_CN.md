@@ -30,4 +30,6 @@ or
 
 - [如何编写一个插件](/docs/learnPlugin_CN.md)
 
-[学到更多](/docs/learnMore_CN.md)
+- [学到更多](/docs/learnMore_CN.md)
+
+- [插件列表](/docs/existingPlugin_CN.md)

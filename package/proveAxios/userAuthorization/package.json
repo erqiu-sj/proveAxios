@@ -1,0 +1,29 @@
+{
+  "name": "@zealforchange/userauthorization",
+  "version": "0.0.1",
+  "description": "user login helper",
+  "main": "./dist/index.js",
+  "module": "./lib/index.js",
+  "types": "./index.d.ts",
+  "scripts": {},
+  "keywords": [
+    "axios",
+    "typescript",
+    "user",
+    "login",
+    "javascript",
+    "helper"
+  ],
+  "files": [
+    "/dist",
+    "/lib"
+  ],
+  "dependencies": {
+    "@zealforchange/proveaxios": "1.1.4"
+  },
+  "peerDependencies": {
+    "axios": "^0.24.0"
+  },
+  "author": "hooks_28",
+  "license": "MIT"
+}

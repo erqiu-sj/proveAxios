@@ -3,8 +3,7 @@ import { WeaknetService } from './weaknet.service';
 let n = 10;
 @Controller('/weaknet')
 export class WeaknetController {
-  constructor(private readonly weaknetService: WeaknetService) {
-  }
+  constructor(private readonly weaknetService: WeaknetService) {}
 
   @Get('/hello')
   hello() {
@@ -15,7 +14,7 @@ export class WeaknetController {
   @Get('/helloTimeout')
   helloTimeout() {
     this.weaknetService.sleep(1000);
-    console.log('helloTimeout')
+    console.log('helloTimeout');
     return 'Hello World! proveAxios';
   }
 
