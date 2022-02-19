@@ -1,4 +1,4 @@
-import { AxiosResponse } from "axios"
+import { AxiosResponse, AxiosRequestConfig } from 'axios'
 
 export declare const HEADER_KEY = 'extraCancellation'
 

@@ -1,16 +1,5 @@
-import {
-    setDynamicPlugin,
-    collectionInterceptor,
-    bindingErrorInstaller,
-    bindingSuccessInstaller,
-    getTargetInstaller
-} from '../utils'
-import {
-    dynamicPluginConfig,
-    decisionInstaller,
-    mergeErrorInstaller,
-    checkDynamicModuleSuccessInstallType
-} from '../types'
+import { setDynamicPlugin, collectionInterceptor, bindingErrorInstaller, bindingSuccessInstaller, getTargetInstaller } from '../utils'
+import { dynamicPluginConfig, decisionInstaller, mergeErrorInstaller, checkDynamicModuleSuccessInstallType } from '../types'
 
 /**
  * @description 注册插件
@@ -18,13 +7,13 @@ import {
  * @returns
  */
 export function dynamicModule(conf: Omit<dynamicPluginConfig<object>, 'interceptor' | 'installer'>) {
-    return (target: Object) => {
-        setDynamicPlugin(target, {
-            ...conf,
-            interceptor: collectionInterceptor(target),
-            installer: getTargetInstaller(target),
-        })
-    }
+  return (target: Object) => {
+    setDynamicPlugin(target, {
+      ...conf,
+      interceptor: collectionInterceptor(target),
+      installer: getTargetInstaller(target),
+    })
+  }
 }
 
 /**
@@ -32,10 +21,10 @@ export function dynamicModule(conf: Omit<dynamicPluginConfig<object>, 'intercept
  * @returns
  */
 export function dynamicModuleErrorInstall(type: decisionInstaller.installReqFail | decisionInstaller.installResFail) {
-    return (target: Object, key: string, desc: TypedPropertyDescriptor<mergeErrorInstaller>) => {
-        bindingErrorInstaller(target, type, desc.value as mergeErrorInstaller)
-        return desc
-    }
+  return (target: Object, key: string, desc: TypedPropertyDescriptor<mergeErrorInstaller>) => {
+    bindingErrorInstaller(target, type, desc.value as mergeErrorInstaller)
+    return desc
+  }
 }
 
 /**
@@ -43,8 +32,8 @@ export function dynamicModuleErrorInstall(type: decisionInstaller.installReqFail
  * @returns
  */
 export function dynamicModuleSuccessInstall<T extends decisionInstaller.installReqSuc | decisionInstaller.installResSuc, C extends object>(type: T) {
-    return (target: Object, key: string, desc: TypedPropertyDescriptor<checkDynamicModuleSuccessInstallType<T, C>>) => {
-        bindingSuccessInstaller(target, type, desc.value as checkDynamicModuleSuccessInstallType<T, C>)
-        return desc
-    }
+  return (target: Object, key: string, desc: TypedPropertyDescriptor<checkDynamicModuleSuccessInstallType<T, C>>) => {
+    bindingSuccessInstaller(target, type, desc.value as checkDynamicModuleSuccessInstallType<T, C>)
+    return desc
+  }
 }

@@ -11,7 +11,8 @@
     "index.d.ts",
     "lib/",
     "cancel/",
-    "retryAfterTimeout/"
+    "retryAfterTimeout/",
+    "wechatRequestConfiguration/"
   ],
   "dependencies": {
     "axios": "^0.24.0",

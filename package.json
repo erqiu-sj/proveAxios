@@ -7,6 +7,7 @@
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.2.0",
     "synchronizationawaiterror": "^0.1.2",
+    "taro-axios": "^1.1.1",
     "youwilllike": "^1.3.11"
   },
   "scripts": {

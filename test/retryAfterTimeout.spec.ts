@@ -18,6 +18,7 @@ class CheckAxios {
   static response(res: AxiosResponse) {
     return Promise.resolve(res)
   }
+
   @interceptorsResponseFail()
   static async responseFail(err: any) {
     return err
