@@ -107,6 +107,12 @@ export type filterEmptyInterceptorReturns = {
   responseSuccessCbList: interceptorsResponseSuccessTypes[]
   responseFailCbList: interceptorsResponseFailTypes[]
 } & instanceConfigReturns<object>
+export interface DebuggerProps {
+  debugger?: boolean
+  debugPlugInNameOnly?: string
+}
+
+export interface InitializeContainerProps extends DebuggerProps { }
 
 declare class InitializeContainerUtils {
   /**
@@ -136,6 +142,8 @@ declare class InitializeContainerUtils {
 }
 
 export declare class InitializeContainer extends InitializeContainerUtils {
+
+
   protected instanceList: filterEmptyInterceptorReturns[]
 
   collect(List: initializeContainerProps['containerList']): this
@@ -145,4 +153,19 @@ export declare class InitializeContainer extends InitializeContainerUtils {
   get(index: number): AxiosInstance
 
   delete(index: number): filterEmptyInterceptorReturns[]
+}
+
+// 执行阶段
+export declare enum executionPhase {
+  checkTheInstallerStage = 'checkTheInstallerStage', // 检查安装器阶段
+  executeTheInstallerPhase = 'executeTheInstallerPhase', // 执行安装器阶段
+  checkTheInterceptorPhase = 'checkTheInterceptorPhase', // 检查拦截器阶段
+  executeTheTnterceptorPhase = 'executeTheTnterceptorPhase' // 执行拦截器阶段
+}
+
+export declare enum interceptorsKey {
+  interceptorsRequestSuccess = 'interceptorsRequestSuccess',
+  interceptorsRequestFail = 'interceptorsRequestFail',
+  responseSuccess = 'responseSuccess',
+  responseFail = 'responseFail',
 }

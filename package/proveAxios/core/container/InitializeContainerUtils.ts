@@ -1,8 +1,9 @@
 import axios, { AxiosInstance, AxiosRequestConfig, AxiosResponse } from 'axios'
-import { initializeContainerProps } from '..'
-import { dynamicPluginConfig, instanceConfig } from '../../types'
-import { checkInterceptorCorrespondingInstaller, getDynamicPluginConfig, getLocalInstance, getModuleConfig } from '../../utils'
+import { DebuggerProps, initializeContainerProps } from '..'
+import { dynamicPluginConfig, instanceConfig, interceptorsKey, decisionInstaller } from '../../types'
+import { checkInterceptorCorrespondingInstaller, getDynamicPluginConfig, getLocalInstance, getModuleConfig, debuggerTips, checkInstaller, checkInterceptor, monitorInstallerExecution, debugPlugInConfiguration } from '../../utils'
 import { interceptorsRequestFailTypes, interceptorsRequestSuccessTypes, interceptorsResponseFailTypes, interceptorsResponseSuccessTypes } from '../index'
+import { Debugger } from './debugger'
 export type instanceConfigReturns = { instance: AxiosInstance; conf: instanceConfig<object>; pluginList: dynamicPluginConfig<object>[] }
 export type filterEmptyInterceptorReturns = {
   requestSuccessCbList: interceptorsRequestSuccessTypes<object>[]
@@ -11,13 +12,22 @@ export type filterEmptyInterceptorReturns = {
   responseFailCbList: interceptorsResponseFailTypes[]
 } & instanceConfigReturns
 
-export class InitializeContainerUtils {
+export interface InitializeContainerUtilsProps extends Debugger {
+}
+export class InitializeContainerUtils extends Debugger {
+  constructor(res?: InitializeContainerUtilsProps) {
+    super(res as any)
+  }
+
   /**
    * @description 实例化
    * @param List
    * @returns
    */
   protected initializationList(List: initializeContainerProps['containerList']): instanceConfigReturns[] {
+    this.withDebuggerCall(() => {
+      console.log(debuggerTips.initializeTheInstanceAndReadThePlugIn)
+    })
     return List.map(item => {
       const instanceConfig = getLocalInstance(item)
       const disassembleThePlugin: dynamicPluginConfig<object>[] =
@@ -39,6 +49,9 @@ export class InitializeContainerUtils {
   protected checkTheInstaller(List: instanceConfigReturns[]): instanceConfigReturns[] {
     return List.map(item => {
       item.pluginList.map(pluginItem => {
+
+        this.checkInstallerHandler(pluginItem.displayName)
+
         const checkInterceptorDecorator = {
           requestFailCb: pluginItem.interceptor?.request.failCb,
           requestSuccessCb: pluginItem.interceptor?.request.successCb,
@@ -74,11 +87,13 @@ export class InitializeContainerUtils {
    */
   protected filterEmptyInterceptor(List: instanceConfigReturns[]): filterEmptyInterceptorReturns[] {
     return List.map((item): filterEmptyInterceptorReturns => {
+
       const requestSuccessCbList = item.pluginList
         .filter(pluginItem => {
           return pluginItem.interceptor?.request.successCb
         })
         .map(nextPlugin => {
+          this.checkInterceptorHandler(interceptorsKey.interceptorsRequestSuccess, nextPlugin.displayName)
           return nextPlugin.interceptor?.request.successCb
         })
       const requestFailCbList = item.pluginList
@@ -86,6 +101,7 @@ export class InitializeContainerUtils {
           return pluginItem.interceptor?.request.failCb
         })
         .map(nextPlugin => {
+          this.checkInterceptorHandler(interceptorsKey.interceptorsRequestFail, nextPlugin.displayName)
           return nextPlugin.interceptor?.request.failCb
         })
       const responseSuccessCbList = item.pluginList
@@ -93,6 +109,7 @@ export class InitializeContainerUtils {
           return pluginItem.interceptor?.response.successCb
         })
         .map(nextPlugin => {
+          this.checkInterceptorHandler(interceptorsKey.responseSuccess, nextPlugin.displayName)
           return nextPlugin.interceptor?.response.successCb
         })
       const responseFailCbList = item.pluginList
@@ -100,8 +117,10 @@ export class InitializeContainerUtils {
           return pluginItem.interceptor?.response.failCb
         })
         .map(nextPlugin => {
+          this.checkInterceptorHandler(interceptorsKey.responseFail, nextPlugin.displayName)
           return nextPlugin.interceptor?.response.failCb
         })
+
       return {
         // @ts-ignore
         requestSuccessCbList,
@@ -128,7 +147,9 @@ export class InitializeContainerUtils {
         async response => {
           let backupRes: null | AxiosResponse = null
           for (let i = 0; i < item.responseSuccessCbList.length; i++) {
+            this.runInstallerHandler(decisionInstaller.installResSuc, item.pluginList[i].displayName)
             if (await item.pluginList[i].installer?.installResSuc?.(backupRes || response)) {
+              this.runInterceptorHandler(interceptorsKey.responseSuccess, item.pluginList[i].displayName,)
               this.configBindExtraFields(item.instance, 'displayName', item.pluginList[i].displayName)
               backupRes = await item.responseSuccessCbList[i].call(this, backupRes || response)
             }
@@ -138,7 +159,9 @@ export class InitializeContainerUtils {
         async err => {
           let backupErr: any = null
           for (let i = 0; i < item.responseFailCbList.length; i++) {
+            this.runInstallerHandler(decisionInstaller.installResFail, item.pluginList[i].displayName)
             if (await item.pluginList[i].installer?.installResFail?.(backupErr || err)) {
+              this.runInterceptorHandler(interceptorsKey.responseFail, item.pluginList[i].displayName,)
               this.configBindExtraFields(item.instance, 'displayName', item.pluginList[i].displayName)
               backupErr = await item.responseFailCbList[i].call(this, backupErr || err, item.instance)
             }
@@ -150,7 +173,9 @@ export class InitializeContainerUtils {
         async config => {
           let backupCconfig: AxiosRequestConfig | null = null
           for (let i = 0; i < item.requestSuccessCbList.length; i++) {
+            this.runInstallerHandler(decisionInstaller.installReqSuc, item.pluginList[i].displayName)
             if (await item.pluginList[i].installer?.installReqSuc?.(backupCconfig || config)) {
+              this.runInterceptorHandler(interceptorsKey.interceptorsRequestSuccess, item.pluginList[i].displayName,)
               this.configBindExtraFields(item.instance, 'displayName', item.pluginList[i].displayName)
               backupCconfig = await item.requestSuccessCbList[i].call(this, backupCconfig || config)
             }
@@ -160,7 +185,9 @@ export class InitializeContainerUtils {
         async err => {
           let backupError: any = null
           for (let i = 0; i < item.requestFailCbList.length; i++) {
+            this.runInstallerHandler(decisionInstaller.installReqFail, item.pluginList[i].displayName)
             if (await item.pluginList[i].installer?.installReqFail?.(backupError || err)) {
+              this.runInterceptorHandler(interceptorsKey.interceptorsRequestFail, item.pluginList[i].displayName,)
               this.configBindExtraFields(item.instance, 'displayName', item.pluginList[i].displayName)
               backupError = await item.requestFailCbList[i].call(this, backupError || err)
             }

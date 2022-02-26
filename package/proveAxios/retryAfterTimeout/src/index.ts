@@ -15,6 +15,7 @@ export class RetryAfterTimeout {
         if (!retrying) return null
         return retrying
     }
+
     @dynamicModuleErrorInstall(decisionInstaller.installResFail)
     static resErrInstall(err: any) {
         return err?.code === "ECONNABORTED"

@@ -1,8 +1,12 @@
+"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
     function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
@@ -40,55 +44,52 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
         if (op[0] & 5) throw op[1]; return { value: op[0] ? op[1] : void 0, done: true };
     }
 };
-import { dynamicModule, priority, dynamicModuleSuccessInstall, decisionInstaller, interceptorsResponseSuccess } from '@zealforchange/proveaxios';
-import axios from 'axios';
-var h = {
-    statusExpirationCode: 401,
-    refreshToken: null,
-    authorizationRequired: false,
-};
-var UserAuthorization = /** @class */ (function () {
-    function UserAuthorization() {
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.RetryAfterTimeout = void 0;
+var proveaxios_1 = require("@zealforchange/proveaxios");
+var core_1 = require("./core");
+var RetryAfterTimeout = /** @class */ (function () {
+    function RetryAfterTimeout() {
     }
-    UserAuthorization.res = function (resp) {
-        var _a;
+    RetryAfterTimeout.resErr = function (err) {
         return __awaiter(this, void 0, void 0, function () {
-            var latestAuthorizationResult;
-            return __generator(this, function (_b) {
-                switch (_b.label) {
-                    case 0: return [4 /*yield*/, ((_a = h.refreshToken) === null || _a === void 0 ? void 0 : _a.call(h, resp))];
+            var retryBeforeCb, retrying;
+            return __generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, new core_1.RetryCore(err).retryBeforeCbCb()];
                     case 1:
-                        _b.sent();
-                        return [4 /*yield*/, axios(resp.config)];
+                        retryBeforeCb = _a.sent();
+                        return [4 /*yield*/, retryBeforeCb.retrying()];
                     case 2:
-                        latestAuthorizationResult = _b.sent();
-                        return [2 /*return*/, Promise.resolve(latestAuthorizationResult)];
+                        retrying = _a.sent();
+                        return [4 /*yield*/, retryBeforeCb.runCallBack('retryAfterCb', retrying)];
+                    case 3:
+                        _a.sent();
+                        if (!retrying)
+                            return [2 /*return*/, null];
+                        return [2 /*return*/, retrying];
                 }
             });
         });
     };
-    UserAuthorization.installSuc = function (res) {
-        if (!h.authorizationRequired)
-            return false;
-        if (res.data.code === h.statusExpirationCode) {
-            return true;
-        }
-        return false;
+    RetryAfterTimeout.resErrInstall = function (err) {
+        return (err === null || err === void 0 ? void 0 : err.code) === "ECONNABORTED";
     };
     __decorate([
-        interceptorsResponseSuccess()
-    ], UserAuthorization, "res", null);
+        proveaxios_1.interceptorsResponseFail(),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", Promise)
+    ], RetryAfterTimeout, "resErr", null);
     __decorate([
-        dynamicModuleSuccessInstall(decisionInstaller.installResSuc)
-    ], UserAuthorization, "installSuc", null);
-    UserAuthorization = __decorate([
-        dynamicModule({ priority: priority.TOP })
-    ], UserAuthorization);
-    return UserAuthorization;
+        proveaxios_1.dynamicModuleErrorInstall(proveaxios_1.decisionInstaller.installResFail),
+        __metadata("design:type", Function),
+        __metadata("design:paramtypes", [Object]),
+        __metadata("design:returntype", void 0)
+    ], RetryAfterTimeout, "resErrInstall", null);
+    RetryAfterTimeout = __decorate([
+        proveaxios_1.dynamicModule({ priority: proveaxios_1.priority.TOP, displayName: 'retryAfterTimeout' })
+    ], RetryAfterTimeout);
+    return RetryAfterTimeout;
 }());
-export { UserAuthorization };
-export function useUserAuthorizationHelper(conf) {
-    h.statusExpirationCode = conf.statusExpirationCode;
-    h.refreshToken = conf.refreshToken || null;
-    h.authorizationRequired = conf.authorizationRequired;
-}
+exports.RetryAfterTimeout = RetryAfterTimeout;

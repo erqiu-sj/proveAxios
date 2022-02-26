@@ -2,40 +2,52 @@ import axios from 'axios';
 function isFunction(val) {
     return typeof val === 'function';
 }
-var pendingMap = new Map();
-var getPendingUrl = function (config) { return [config.method, config.url].join('&'); };
-export var HEADER_KEY = 'extraCancellation';
-var AxiosCanceler = (function () {
-    function AxiosCanceler() {
-    }
-    AxiosCanceler.prototype.addPending = function (config) {
+let pendingMap = new Map();
+const getPendingUrl = (config) => [config.method, config.url].join('&');
+// 多次请求则取消上一次请求头
+export const HEADER_KEY = 'extraCancellation';
+export class AxiosCanceler {
+    /**
+     * Add request
+     * @param {Object} config
+     */
+    addPending(config) {
         this.removePending(config);
-        var url = getPendingUrl(config);
+        const url = getPendingUrl(config);
         config.cancelToken =
             config.cancelToken ||
-                new axios.CancelToken(function (cancel) {
+                new axios.CancelToken(cancel => {
                     if (!pendingMap.has(url)) {
+                        // If there is no current request in pending, add it
                         pendingMap.set(url, cancel);
                     }
                 });
-    };
-    AxiosCanceler.prototype.removeAllPending = function () {
-        pendingMap.forEach(function (cancel) {
+    }
+    /**
+     * @description: Clear all pending
+     */
+    removeAllPending() {
+        pendingMap.forEach(cancel => {
             cancel && isFunction(cancel) && cancel();
         });
         pendingMap.clear();
-    };
-    AxiosCanceler.prototype.removePending = function (config) {
-        var url = getPendingUrl(config);
+    }
+    /**
+     * Removal request
+     * @param {Object} config
+     */
+    removePending(config) {
+        const url = getPendingUrl(config);
         if (pendingMap.has(url)) {
-            var cancel = pendingMap.get(url);
+            const cancel = pendingMap.get(url);
             cancel && cancel(url);
             pendingMap.delete(url);
         }
-    };
-    AxiosCanceler.prototype.reset = function () {
+    }
+    /**
+     * @description: reset
+     */
+    reset() {
         pendingMap = new Map();
-    };
-    return AxiosCanceler;
-}());
-export { AxiosCanceler };
+    }
+}

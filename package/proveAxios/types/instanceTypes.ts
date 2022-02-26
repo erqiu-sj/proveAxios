@@ -21,7 +21,14 @@ export enum decisionInstaller {
     installResSuc = 'installResSuc', // 安装响应成功拦截器
     installResFail = 'installResFail', // 安装响应失败拦截器
 }
-
+// 执行阶段
+export enum executionPhase {
+    // 检查安装器阶段
+    checkTheInstallerStage = 'checkTheInstallerStage',
+    executeTheInstallerPhase = 'executeTheInstallerPhase', // 执行安装器阶段
+    checkTheInterceptorPhase = 'checkTheInterceptorPhase', // 检查拦截器阶段
+    executeTheTnterceptorPhase = 'executeTheTnterceptorPhase' // 执行拦截器阶段
+}
 export type instanceConfig<C extends object> = Partial<{
     config?: customConfiguration<C>
     interceptor: {

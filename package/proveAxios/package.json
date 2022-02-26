@@ -5,7 +5,9 @@
   "main": "./dist/index.js",
   "module": "./lib/index.js",
   "description": "",
-  "scripts": {},
+  "scripts": {
+    "build": "tsc -p ./tsconfig.json"
+  },
   "files": [
     "dist/",
     "index.d.ts",
