@@ -32,4 +32,6 @@ or
 
 - [学到更多](/docs/learnMore_CN.md)
 
+- [调试你的插件](/docs/debugger_CN.md)
+
 - [插件列表](/docs/existingPlugin_CN.md)

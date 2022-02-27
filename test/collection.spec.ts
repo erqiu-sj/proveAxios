@@ -9,6 +9,7 @@ import {
     priority
     , decisionInstaller,
     dynamicModuleSuccessInstall,
+    executionPhase
 } from '@zealforchange/proveaxios'
 import { Cancel, HEADER_KEY } from '@zealforchange/proveaxios/cancel'
 import { RetryAfterTimeout, retryAfterTimeoutOps } from '@zealforchange/proveaxios/retryAfterTimeout'
@@ -52,7 +53,7 @@ class CollectionSpec {
     }
 }
 
-const instanceList = new InitializeContainer({ debugPlugInNameOnly: 'Test1', debugger: true, monitorAStage: 'executeTheTnterceptorPhase' }).collect([CollectionSpec])
+const instanceList = new InitializeContainer({ debugPlugInNameOnly: 'Test1', debugger: true, monitorAStage: executionPhase.executeTheTnterceptorPhase }).collect([CollectionSpec])
 
 export function httpHelper(conf: customConfiguration<retryAfterTimeoutOps<object>>) {
     return instanceList.get(instanceAlias.firstInstance)(conf)

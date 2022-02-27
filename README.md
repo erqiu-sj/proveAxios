@@ -34,4 +34,6 @@ until his appearance --- proveAxios
 
 - [Existing plugin](/docs/existingPlugin.md)
 
+- [debug your plugin](/docs/debugger.md)
+
 [中文文档](/docs/README_CN.md)
