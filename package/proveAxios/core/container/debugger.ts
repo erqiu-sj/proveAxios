@@ -15,14 +15,21 @@ export class Debugger {
         this.debugger = ops?.debugger || false
         this.debugPlugInNameOnly = ops?.debugPlugInNameOnly || ''
         this.monitorAStage = ops?.monitorAStage
-        console.log(this.monitorAStage, 'this monitorAStage ')
     }
 
     // 是否执行 debugger callback
     protected withDebuggerCall(callback?: () => void): void {
         this.debugger && callback?.()
     }
+    // 根据 监听根据指定插件名 判断是否执行回调
+    protected withDebugPlugInNameOnlyCall(callback: () => void, displayName?: string) {
+        this.withDebuggerCall(() => {
+            if (displayName === this.debugPlugInNameOnly) {
+                callback()
+            }
+        })
 
+    }
     /**
        * @description 包装 debugger 所需参数
        */
@@ -32,43 +39,44 @@ export class Debugger {
             isDebugPlugInNameOnly: this.debugger
         }
     }
+
     // 检查安装器
-    protected checkInstallerHandler(displayName?: string) {
-        this.withDebuggerCall(() => {
+    protected checkInstallerHandler(installType: decisionInstaller, displayName?: string,) {
+        this.withDebugPlugInNameOnlyCall(() => {
             this.monitorAStage === executionPhase.checkTheInstallerStage &&
                 checkInstaller(displayName, {
-                    ...this.parametersRequiredToWrapTheDebugger()
+                    ...this.parametersRequiredToWrapTheDebugger(),
+                    installType
                 })
-        })
+        }, displayName)
     }
     // 安装拦截器中
     protected checkInterceptorHandler(type: interceptorsKey, displayName?: string) {
-        this.withDebuggerCall(() => {
+        this.withDebugPlugInNameOnlyCall(() => {
             this.monitorAStage === executionPhase.checkTheInterceptorPhase && checkInterceptor(displayName, {
                 ...this.parametersRequiredToWrapTheDebugger(),
                 interceptorType: type
             })
-        })
+        }, displayName)
     }
     // 执行安装器中
     protected runInstallerHandler(decisionInstaller: decisionInstaller, displayName?: string) {
-        this.withDebuggerCall(() => {
+        this.withDebugPlugInNameOnlyCall(() => {
             this.monitorAStage === executionPhase.executeTheInstallerPhase && monitorInstallerExecution(displayName, {
                 installerType: decisionInstaller,
                 ...this.parametersRequiredToWrapTheDebugger()
             })
-        }
-        )
+        }, displayName)
     }
 
     protected runInterceptorHandler(
         interceptorType: interceptorsKey, displayName?: string
     ) {
-        this.withDebuggerCall(() => {
+        this.withDebugPlugInNameOnlyCall(() => {
             this.monitorAStage === executionPhase.executeTheTnterceptorPhase && monitorPluginInterceptorExecution(displayName, {
                 interceptorType,
                 ...this.parametersRequiredToWrapTheDebugger(),
             })
-        })
+        }, displayName)
     }
 }

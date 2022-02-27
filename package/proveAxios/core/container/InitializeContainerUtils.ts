@@ -49,9 +49,6 @@ export class InitializeContainerUtils extends Debugger {
   protected checkTheInstaller(List: instanceConfigReturns[]): instanceConfigReturns[] {
     return List.map(item => {
       item.pluginList.map(pluginItem => {
-
-        this.checkInstallerHandler(pluginItem.displayName)
-
         const checkInterceptorDecorator = {
           requestFailCb: pluginItem.interceptor?.request.failCb,
           requestSuccessCb: pluginItem.interceptor?.request.successCb,
@@ -71,9 +68,13 @@ export class InitializeContainerUtils extends Debugger {
         // 空直接报错
         if (!pluginItem.installer) throw new Error('please check if the interception installer is bound')
         // 判断对应的拦截器是否有对应的安装器
+        this.checkInstallerHandler(decisionInstaller.installReqSuc, pluginItem.displayName)
         if (!checkInterceptorCorrespondingInstaller(checkInterceptorDecorator.requestSuccessCb, pluginItem.installer.installReqSuc)) throw new Error('missing the corresponding request successful installer')
+        this.checkInstallerHandler(decisionInstaller.installReqFail, pluginItem.displayName)
         if (!checkInterceptorCorrespondingInstaller(checkInterceptorDecorator.requestFailCb, pluginItem.installer.installReqFail)) throw new Error('the corresponding request failed installer is missing')
+        this.checkInstallerHandler(decisionInstaller.installResSuc, pluginItem.displayName)
         if (!checkInterceptorCorrespondingInstaller(checkInterceptorDecorator.responseSuccessCb, pluginItem.installer.installResSuc)) throw new Error('the corresponding response is missing successfully installer')
+        this.checkInstallerHandler(decisionInstaller.installResFail, pluginItem.displayName)
         if (!checkInterceptorCorrespondingInstaller(checkInterceptorDecorator.responseFailCb, pluginItem.installer.installResFail)) throw new Error('missing the corresponding response failed installer')
         return { ...pluginItem }
       })

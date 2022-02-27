@@ -5,7 +5,10 @@
   "main": "./dist/index.js",
   "module": "./lib/index.js",
   "types": "./index.d.ts",
-  "scripts": {},
+  "scripts": {
+    "build:node": "rm -rf ./dist & tsc --module commonjs --outDir ./dist -p ./tsconfig.json",
+    "build:esm": "rm -rf ./lib & tsc --module ESNext --outDir ./lib -p ./tsconfig.json"
+  },
   "keywords": [
     "axios",
     "typescript",

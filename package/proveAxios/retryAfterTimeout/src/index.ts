@@ -5,7 +5,8 @@ import {
 import { RetryCore } from './core'
 import { retryAfterTimeoutOps } from './type'
 
-@dynamicModule({ priority: priority.TOP, displayName: 'retryAfterTimeout' })
+const retryAfterTimeoutDisplayName = 'retryAfterTimeout'
+@dynamicModule({ priority: priority.TOP, displayName: retryAfterTimeoutDisplayName })
 export class RetryAfterTimeout {
     @interceptorsResponseFail()
     static async resErr(err: unknown,) {
@@ -21,7 +22,9 @@ export class RetryAfterTimeout {
         return err?.code === "ECONNABORTED"
     }
 }
-
+export {
+    retryAfterTimeoutDisplayName
+}
 export type {
     retryAfterTimeoutOps
 }

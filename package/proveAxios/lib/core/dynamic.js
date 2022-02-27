@@ -1,14 +1,3 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { setDynamicPlugin, collectionInterceptor, bindingErrorInstaller, bindingSuccessInstaller, getTargetInstaller } from '../utils';
 /**
  * @description 注册插件
@@ -16,8 +5,8 @@ import { setDynamicPlugin, collectionInterceptor, bindingErrorInstaller, binding
  * @returns
  */
 export function dynamicModule(conf) {
-    return function (target) {
-        setDynamicPlugin(target, __assign(__assign({}, conf), { interceptor: collectionInterceptor(target), installer: getTargetInstaller(target) }));
+    return (target) => {
+        setDynamicPlugin(target, Object.assign(Object.assign({}, conf), { interceptor: collectionInterceptor(target), installer: getTargetInstaller(target) }));
     };
 }
 /**
@@ -25,7 +14,7 @@ export function dynamicModule(conf) {
  * @returns
  */
 export function dynamicModuleErrorInstall(type) {
-    return function (target, key, desc) {
+    return (target, key, desc) => {
         bindingErrorInstaller(target, type, desc.value);
         return desc;
     };
@@ -35,9 +24,8 @@ export function dynamicModuleErrorInstall(type) {
  * @returns
  */
 export function dynamicModuleSuccessInstall(type) {
-    return function (target, key, desc) {
+    return (target, key, desc) => {
         bindingSuccessInstaller(target, type, desc.value);
         return desc;
     };
 }
-//# sourceMappingURL=dynamic.js.map

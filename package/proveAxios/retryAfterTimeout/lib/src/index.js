@@ -42,6 +42,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 };
 import { decisionInstaller, dynamicModule, dynamicModuleErrorInstall, interceptorsResponseFail, priority } from '@zealforchange/proveaxios';
 import { RetryCore } from './core';
+var retryAfterTimeoutDisplayName = 'retryAfterTimeout';
 var RetryAfterTimeout = /** @class */ (function () {
     function RetryAfterTimeout() {
     }
@@ -76,8 +77,9 @@ var RetryAfterTimeout = /** @class */ (function () {
         dynamicModuleErrorInstall(decisionInstaller.installResFail)
     ], RetryAfterTimeout, "resErrInstall", null);
     RetryAfterTimeout = __decorate([
-        dynamicModule({ priority: priority.TOP, displayName: 'retryAfterTimeout' })
+        dynamicModule({ priority: priority.TOP, displayName: retryAfterTimeoutDisplayName })
     ], RetryAfterTimeout);
     return RetryAfterTimeout;
 }());
 export { RetryAfterTimeout };
+export { retryAfterTimeoutDisplayName };

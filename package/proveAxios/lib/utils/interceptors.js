@@ -4,4 +4,3 @@ export function getInterceptorsKey(target, type) {
 export function createInterceptorsKey(target, func, type) {
     Reflect.defineMetadata(type, func, target);
 }
-//# sourceMappingURL=interceptors.js.map

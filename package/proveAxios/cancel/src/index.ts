@@ -4,7 +4,8 @@ import { AxiosCanceler, HEADER_KEY } from './core'
 
 const ownAxiosCanceler = new AxiosCanceler()
 
-@dynamicModule({ priority: priority.TOP })
+const cancelDisplayName = 'cancel'
+@dynamicModule({ priority: priority.TOP, displayName: cancelDisplayName })
 export class Cancel {
   @interceptorsRequestSuccess()
   static req(conf: AxiosRequestConfig) {
@@ -30,4 +31,4 @@ export class Cancel {
   }
 }
 
-export { HEADER_KEY, ownAxiosCanceler }
+export { HEADER_KEY, ownAxiosCanceler, cancelDisplayName }

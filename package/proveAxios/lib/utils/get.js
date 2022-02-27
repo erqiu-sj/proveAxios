@@ -1,14 +1,3 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { getInterceptorsKey } from '.';
 import { PARTIAL_INSTANCE } from '../constants';
 import { interceptorsKey } from '../types';
@@ -27,8 +16,8 @@ export function getLocalInstance(target) {
  * @returns
  */
 export function setLocalInstanceConfig(target, conf) {
-    var getInstance = getLocalInstance(target);
-    Reflect.defineMetadata(PARTIAL_INSTANCE, __assign(__assign({}, getInstance), { config: conf }), target);
+    const getInstance = getLocalInstance(target);
+    Reflect.defineMetadata(PARTIAL_INSTANCE, Object.assign(Object.assign({}, getInstance), { config: conf }), target);
 }
 /**
  * @description 将拦截器注入到实例配置中
@@ -37,8 +26,8 @@ export function setLocalInstanceConfig(target, conf) {
  * @returns
  */
 export function setInterceptor(target, conf) {
-    var getInstance = getLocalInstance(target);
-    Reflect.defineMetadata(PARTIAL_INSTANCE, __assign(__assign({}, getInstance), { interceptor: __assign({}, conf) }), target);
+    const getInstance = getLocalInstance(target);
+    Reflect.defineMetadata(PARTIAL_INSTANCE, Object.assign(Object.assign({}, getInstance), { interceptor: Object.assign({}, conf) }), target);
     return conf;
 }
 /**
@@ -57,4 +46,3 @@ export function collectionInterceptor(target) {
         },
     });
 }
-//# sourceMappingURL=get.js.map

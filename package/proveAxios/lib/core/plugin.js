@@ -1,11 +1,11 @@
 import { builtinPrioritySorting, customPrioritySorting, verifyDynamicPlugin, isCustomPriorityPlugin, setModuleConfig, mergePriorityList } from '../utils';
 export function Module(modules) {
     // 自定义优先级
-    var customPriority = [];
+    const customPriority = [];
     // 自带优先级
-    var selfPriority = [];
-    return function (target) {
-        modules.forEach(function (moduleItems, moduleIndex) {
+    const selfPriority = [];
+    return (target) => {
+        modules.forEach((moduleItems, moduleIndex) => {
             verifyDynamicPlugin(moduleItems, moduleIndex + 1);
             if (isCustomPriorityPlugin(moduleItems))
                 customPriority.push(moduleItems);
@@ -21,4 +21,3 @@ export function Module(modules) {
         });
     };
 }
-//# sourceMappingURL=plugin.js.map

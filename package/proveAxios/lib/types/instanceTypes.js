@@ -12,4 +12,12 @@ export var decisionInstaller;
     decisionInstaller["installResSuc"] = "installResSuc";
     decisionInstaller["installResFail"] = "installResFail";
 })(decisionInstaller || (decisionInstaller = {}));
-//# sourceMappingURL=instanceTypes.js.map
+// 执行阶段
+export var executionPhase;
+(function (executionPhase) {
+    // 检查安装器阶段
+    executionPhase["checkTheInstallerStage"] = "checkTheInstallerStage";
+    executionPhase["executeTheInstallerPhase"] = "executeTheInstallerPhase";
+    executionPhase["checkTheInterceptorPhase"] = "checkTheInterceptorPhase";
+    executionPhase["executeTheTnterceptorPhase"] = "executeTheTnterceptorPhase"; // 执行拦截器阶段
+})(executionPhase || (executionPhase = {}));

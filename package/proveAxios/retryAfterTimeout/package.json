@@ -4,9 +4,9 @@
   "description": "retry after timeout",
   "main": "./dist/src/index.js",
   "module": "./lib/src/index.js",
-  "types": "./index.d.ts",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build:node": "rm -rf ./dist & tsc --module commonjs --outDir ./dist -p ./tsconfig.json",
+    "build:esm": "rm -rf ./lib & tsc --module ESNext --outDir ./lib -p ./tsconfig.json"
   },
   "keywords": [
     "http",

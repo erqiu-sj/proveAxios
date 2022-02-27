@@ -12,12 +12,12 @@ import {
 } from '@zealforchange/proveaxios'
 import { Cancel, HEADER_KEY } from '@zealforchange/proveaxios/cancel'
 import { RetryAfterTimeout, retryAfterTimeoutOps } from '@zealforchange/proveaxios/retryAfterTimeout'
+import { UserAuthorization } from '@zealforchange/proveaxios/userAuthorization'
 
-@dynamicModule({ priority: priority.TOP })
+@dynamicModule({ priority: priority.TOP, displayName: "test" })
 class Test {
     @interceptorsRequestSuccess<object>()
     static req(conf: customConfiguration<object>) {
-        console.log('test')
         return conf
     }
 
@@ -37,8 +37,9 @@ class Test1 {
     static reqInstall(conf: customConfiguration<object>) {
         return true
     }
+
 }
-@Module([Cancel, RetryAfterTimeout, Test, Test1])
+@Module([Cancel, RetryAfterTimeout, UserAuthorization, Test, Test1])
 @initializationAxios({
     headers: {
         [HEADER_KEY]: HEADER_KEY
@@ -50,7 +51,8 @@ class CollectionSpec {
         return conf
     }
 }
-const instanceList = new InitializeContainer({ debugPlugInNameOnly: 'Test1', debugger: true, monitorAStage: 'checkTheInstallerStage' }).collect([CollectionSpec])
+
+const instanceList = new InitializeContainer({ debugPlugInNameOnly: 'Test1', debugger: true, monitorAStage: 'executeTheTnterceptorPhase' }).collect([CollectionSpec])
 
 export function httpHelper(conf: customConfiguration<retryAfterTimeoutOps<object>>) {
     return instanceList.get(instanceAlias.firstInstance)(conf)
@@ -58,6 +60,7 @@ export function httpHelper(conf: customConfiguration<retryAfterTimeoutOps<object
 
 it('test', () => {
     httpHelper({
-        url: ""
+        url: "",
+        timeout: 0.1
     })
 })

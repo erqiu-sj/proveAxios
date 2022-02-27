@@ -10,6 +10,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 import { dynamicModule, priority, interceptorsRequestSuccess, dynamicModuleSuccessInstall, decisionInstaller, interceptorsResponseSuccess } from '@zealforchange/proveaxios';
 import { AxiosCanceler, HEADER_KEY } from './core';
 const ownAxiosCanceler = new AxiosCanceler();
+const cancelDisplayName = 'cancel';
 let Cancel = class Cancel {
     static req(conf) {
         ownAxiosCanceler.addPending(conf);
@@ -52,7 +53,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], Cancel, "reqInstaller", null);
 Cancel = __decorate([
-    dynamicModule({ priority: priority.TOP })
+    dynamicModule({ priority: priority.TOP, displayName: cancelDisplayName })
 ], Cancel);
 export { Cancel };
-export { HEADER_KEY, ownAxiosCanceler };
+export { HEADER_KEY, ownAxiosCanceler, cancelDisplayName };

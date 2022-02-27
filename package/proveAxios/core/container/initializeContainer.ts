@@ -12,6 +12,7 @@ export class InitializeContainer extends InitializeContainerUtils {
   constructor(res?: InitializeContainerProps) {
     super(res as any)
   }
+
   collect(List: initializeContainerProps['containerList']): this {
     this.instanceList = this.bindingInterceptor(this.filterEmptyInterceptor(this.checkTheInstaller(this.initializationList(List))))
     return this

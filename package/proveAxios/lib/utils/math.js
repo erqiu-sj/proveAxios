@@ -5,4 +5,3 @@ export function middle(num) {
     // @ts-ignore
     return num[parseInt(num.length / 2)]; //奇数个取最中间那个数
 }
-//# sourceMappingURL=math.js.map

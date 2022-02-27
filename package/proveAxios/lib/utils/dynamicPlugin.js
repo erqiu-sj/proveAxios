@@ -1,14 +1,3 @@
-var __assign = (this && this.__assign) || function () {
-    __assign = Object.assign || function(t) {
-        for (var s, i = 1, n = arguments.length; i < n; i++) {
-            s = arguments[i];
-            for (var p in s) if (Object.prototype.hasOwnProperty.call(s, p))
-                t[p] = s[p];
-        }
-        return t;
-    };
-    return __assign.apply(this, arguments);
-};
 import { DYNAMIC_PLUGIN, MODULE_CONFIGURATION, INTERCEPTOR } from '../constants';
 import { priority } from '../constants';
 import { middle } from '../utils';
@@ -33,9 +22,9 @@ export function getDynamicPluginConfig(target) {
  * @param target
  */
 export function verifyDynamicPlugin(target, index) {
-    var check = getDynamicPluginConfig(target);
+    const check = getDynamicPluginConfig(target);
     if (!check) {
-        throw new Error("Mismatch in the ".concat(index, "th plugin type"));
+        throw new Error(`Mismatch in the ${index}th plugin type`);
     }
 }
 /**
@@ -44,14 +33,14 @@ export function verifyDynamicPlugin(target, index) {
  * @returns
  */
 export function isCustomPriorityPlugin(target) {
-    var conf = getDynamicPluginConfig(target);
+    const conf = getDynamicPluginConfig(target);
     return typeof conf.priority === 'number';
 }
 /**
  * @description 自定义优先级排序
  */
 export function customPrioritySorting(tagetList) {
-    tagetList.sort(function (a, b) {
+    tagetList.sort((a, b) => {
         return getDynamicPluginConfig(b).priority - getDynamicPluginConfig(a).priority;
     });
 }
@@ -59,12 +48,12 @@ export function customPrioritySorting(tagetList) {
  * @description 自带优先级排序
  */
 export function builtinPrioritySorting(tagetList) {
-    var priorityList = [priority.LOWEST, priority.INTERMEDIATE, priority.TOP];
-    tagetList.sort(function (a, b) {
-        var prev = getDynamicPluginConfig(a);
-        var next = getDynamicPluginConfig(b);
-        var prevIndex = priorityList.findIndex(function (key) { return key === prev.priority; });
-        var nextIndex = priorityList.findIndex(function (key) { return key === next.priority; });
+    const priorityList = [priority.LOWEST, priority.INTERMEDIATE, priority.TOP];
+    tagetList.sort((a, b) => {
+        const prev = getDynamicPluginConfig(a);
+        const next = getDynamicPluginConfig(b);
+        const prevIndex = priorityList.findIndex(key => key === prev.priority);
+        const nextIndex = priorityList.findIndex(key => key === next.priority);
         return nextIndex - prevIndex;
     });
 }
@@ -75,7 +64,7 @@ export function builtinPrioritySorting(tagetList) {
 function isPriority(target, type) {
     if (!target)
         return false;
-    var priorityPluginConf = getDynamicPluginConfig(target).priority;
+    const priorityPluginConf = getDynamicPluginConfig(target).priority;
     if (typeof priorityPluginConf === 'number')
         return false;
     if (priorityPluginConf === type)
@@ -91,7 +80,7 @@ function isPriority(target, type) {
 function isPriorityJudgment(customPriorityTarget, priority) {
     if (!customPriorityTarget)
         return false;
-    var customPriority = getDynamicPluginConfig(customPriorityTarget).priority;
+    const customPriority = getDynamicPluginConfig(customPriorityTarget).priority;
     if (!customPriority)
         return false;
     if (typeof customPriority === 'string')
@@ -99,7 +88,7 @@ function isPriorityJudgment(customPriorityTarget, priority) {
     return customPriority >= priority;
 }
 function toMergetList(list, target) {
-    var checkList = list.shift();
+    const checkList = list.shift();
     checkList && target.push(checkList);
 }
 /**
@@ -109,7 +98,7 @@ function toMergetList(list, target) {
  * @param target
  */
 export function checkPrevisPriorityList(list, type, target) {
-    for (var i = 0; i < list.length; i++) {
+    for (let i = 0; i < list.length; i++) {
         if (!(getDynamicPluginConfig(list[i]).priority === type)) {
             break;
         }
@@ -125,12 +114,12 @@ export function mergePriorityList(customPriority, selfPriority) {
         return customPriority;
     if (!customPriority.length)
         return selfPriority;
-    var mergeList = [];
-    var customPriorityList = customPriority.map(function (customPriorityItem) {
+    const mergeList = [];
+    const customPriorityList = customPriority.map(customPriorityItem => {
         return getDynamicPluginConfig(customPriorityItem).priority;
     });
     // 优先级大小
-    var customSortSize = {
+    const customSortSize = {
         // 高优先级
         highPriority: customPriorityList[0],
         // 中优先级
@@ -138,9 +127,9 @@ export function mergePriorityList(customPriority, selfPriority) {
         // 低优先级
         lowPriority: customPriorityList[customPriorityList.length - 1],
     };
-    var length = customPriority.length;
+    const length = customPriority.length;
     // 循环自定义优先级列表
-    for (var i = 0; i <= length; i++) {
+    for (let i = 0; i <= length; i++) {
         if (isPriority(selfPriority[i], priority.TOP)) {
             // 是否是优先级===Top插件
             toMergetList(selfPriority, mergeList);
@@ -170,7 +159,7 @@ export function mergePriorityList(customPriority, selfPriority) {
             continue;
         }
     }
-    customPriority.forEach(function (customPriorityItem) {
+    customPriority.forEach(customPriorityItem => {
         mergeList.push(customPriorityItem);
     });
     return mergeList;
@@ -196,15 +185,13 @@ export function getTargetInstaller(target) {
  * @description 绑定成功安装器
  */
 export function bindingSuccessInstaller(target, type, fn) {
-    var _a;
-    Reflect.defineMetadata(INTERCEPTOR, __assign(__assign({}, getTargetInstaller(target)), (_a = {}, _a[type] = fn, _a)), target);
+    Reflect.defineMetadata(INTERCEPTOR, Object.assign(Object.assign({}, getTargetInstaller(target)), { [type]: fn }), target);
 }
 /**
  * @description 绑定错误安装器
  */
 export function bindingErrorInstaller(target, type, fn) {
-    var _a;
-    Reflect.defineMetadata(INTERCEPTOR, __assign(__assign({}, getTargetInstaller(target)), (_a = {}, _a[type] = fn, _a)), target);
+    Reflect.defineMetadata(INTERCEPTOR, Object.assign(Object.assign({}, getTargetInstaller(target)), { [type]: fn }), target);
 }
 /**
  * @description 拦截器是否存在对应的安装器
@@ -215,4 +202,3 @@ export function checkInterceptorCorrespondingInstaller(interceptor, installer) {
         return false;
     return true;
 }
-//# sourceMappingURL=dynamicPlugin.js.map
