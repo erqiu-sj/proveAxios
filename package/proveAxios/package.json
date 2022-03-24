@@ -21,6 +21,7 @@
     "axios": "^0.24.0",
     "reflect-metadata": "^0.1.13"
   },
+  "repository": "https://github.com/erqiu-sj/proveAxios.git",
   "keywords": [
     "axios",
     "javascript",
