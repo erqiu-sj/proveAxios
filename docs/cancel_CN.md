@@ -1,3 +1,12 @@
+<!--
+ * @Author: 邱狮杰
+ * @Date: 2022-01-18 23:03:36
+ * @LastEditTime: 2022-03-24 22:30:26
+ * @Description:
+
+ * @FilePath: /proveAxios/docs/cancel_CN.md
+-->
+
 ```ts
 import {
   initializationAxios, // 初始化axios配置
@@ -29,6 +38,35 @@ const g = new InitializeContainer().collect([CancelAxios])
 
 g.get(0).get('/weaknet/delay', { data: { mark: 'start' } })
 g.get(0).get('/weaknet/delay', { data: { mark: 'end' } }) // 该请求会取消mark === ‘start’的那一次请求
+```
+
+```ts
+import { customConfiguration, instanceAlias } from '@zealforchange/proveaxios'
+import { CancelConfig, generateExpirationTime } from '@zealforchange/proveaxios/cancel'
+
+updateCancelConf({
+  // 配置缓存规则
+  // 每次请求都会调用这个函数，将返回的字符串数组拼接成一个字符串，作为缓存key
+
+  // 请求配置
+  cancelRequestRule(config: customConfiguration<CancelConfig>) {
+    return [config.method, config.url]
+  },
+})
+@Module([Cancel])
+@initializationAxios({
+  baseURL: 'http://localhost:3000',
+})
+class CancelAxios {}
+
+const g = new InitializeContainer().collect([CancelAxios])
+function httpHelper(conf: customConfiguration) {
+  return g.get(instanceAlias.firstInstance)(conf)
+}
+// 请求结果将被缓存一分钟
+await httpHepler({ url: '/get', expiration: generateExpirationTime('min', 1) })
+// enableCache 为 true 时就会去缓存中取值,并取消该请求
+await httpHepler({ url: '/get', enableCache: true })
 ```
 
 [测试用例](/test/cannel.spec.ts)

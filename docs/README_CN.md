@@ -1,3 +1,11 @@
+<!--
+ * @Author: 邱狮杰
+ * @Date: 2022-02-27 13:28:16
+ * @LastEditTime: 2022-03-24 22:17:14
+ * @Description:
+ * @FilePath: /proveAxios/docs/README_CN.md
+-->
+
 # proveAxios
 
 ## install
@@ -22,7 +30,7 @@ or
 
 ## use
 
-- [最佳实践 1 - 如何优雅的配置取消重复请求?](/docs/cancel_CN.md)
+- [最佳实践 1 - 如何优雅的配置取消重复请求(或者缓存请求)?](/docs/cancel_CN.md)
 
 - [最佳实践 2 - 如何优雅的配置重试请求?](/docs/retry_CN.md)
 

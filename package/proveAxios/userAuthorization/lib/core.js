@@ -47,7 +47,7 @@ var h = {
     refreshToken: null,
     authorizationRequired: false,
 };
-var UserAuthorization = /** @class */ (function () {
+var UserAuthorization = (function () {
     function UserAuthorization() {
     }
     UserAuthorization.res = function (resp) {
@@ -56,13 +56,13 @@ var UserAuthorization = /** @class */ (function () {
             var latestAuthorizationResult;
             return __generator(this, function (_b) {
                 switch (_b.label) {
-                    case 0: return [4 /*yield*/, ((_a = h.refreshToken) === null || _a === void 0 ? void 0 : _a.call(h, resp))];
+                    case 0: return [4, ((_a = h.refreshToken) === null || _a === void 0 ? void 0 : _a.call(h, resp))];
                     case 1:
                         _b.sent();
-                        return [4 /*yield*/, axios(resp.config)];
+                        return [4, axios(resp.config)];
                     case 2:
                         latestAuthorizationResult = _b.sent();
-                        return [2 /*return*/, Promise.resolve(latestAuthorizationResult)];
+                        return [2, Promise.resolve(latestAuthorizationResult)];
                 }
             });
         });

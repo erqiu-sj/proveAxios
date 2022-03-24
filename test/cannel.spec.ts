@@ -1,16 +1,20 @@
-import { initializationAxios, InitializeContainer, interceptorsResponseSuccess, Module } from '@zealforchange/proveaxios'
-import { Cancel, HEADER_KEY } from '@zealforchange/proveaxios/cancel'
-
+/*
+ * @Author: 邱狮杰
+ * @Date: 2022-01-18 23:03:36
+ * @LastEditTime: 2022-03-24 22:27:23
+ * @Description: 
+ * @FilePath: /proveAxios/test/cannel.spec.ts
+ */
+import { customConfiguration, initializationAxios, InitializeContainer, instanceAlias, interceptorsResponseSuccess, Module } from '@zealforchange/proveaxios'
+// import { HEADER_KEY } from '@zealforchange/proveaxios/cancel'
 import { AxiosResponse } from 'axios'
+import { Cancel, CancelConfig, generateExpirationTime, HEADER_KEY, updateCancelConf } from '../package/proveAxios/cancel/src/index'
 
 jest.setTimeout(100000)
-
 @Module([Cancel])
 @initializationAxios({
-  baseURL: 'http://localhost:3000',
-  headers: {
-    [HEADER_KEY]: HEADER_KEY,
-  },
+  baseURL: 'http://localhost:3002',
+
 })
 class CheckAxios {
   @interceptorsResponseSuccess()
@@ -21,10 +25,16 @@ class CheckAxios {
 
 const g = new InitializeContainer().collect([CheckAxios])
 
+export function httpHelper(config: customConfiguration<CancelConfig>) {
+  return g.get(instanceAlias.firstInstance)(config)
+}
+
 beforeAll(async () => {
-  const result = await g.get(0).put('/weaknet/setDelay', { start: 10 })
+  const result = await httpHelper({ url: "/weaknet/setDelay", method: "PUT", data: { start: 10 } })
+  // const result = await g.get(0).put('/weaknet/setDelay', { start: 10 })
   expect(result).toStrictEqual('set10')
 })
+
 
 it('cannel', done => {
   /**
@@ -36,17 +46,36 @@ it('cannel', done => {
    * 所以后一个请求返回时在等待队列里发现了前一个请求则将其取消掉
    *
    */
-  g.get(0)
-    .get('/weaknet/delay', { data: { mark: 'start' } })
-    .then(res => {
-      // 当请求被取消时会返回一个 {message:string}  object
-      // @ts-ignore
-      expect(res.message).toStrictEqual('get&/weaknet/delay')
-    })
-  g.get(0)
-    .get('/weaknet/delay', { data: { mark: 'end' } })
-    .then(res => {
-      expect(res).toStrictEqual('delay7-end')
-    })
+  httpHelper({
+    url: "/weaknet/delay", data: { mark: 'start' },
+    headers: {
+      [HEADER_KEY]: HEADER_KEY,
+    },
+  }).then((res) => {
+    // 当请求被取消时会返回一个 {message:string}  object
+    // @ts-ignore
+    expect(res.message).toStrictEqual('get&/weaknet/delay')
+  })
+
+  httpHelper({
+    url: "/weaknet/delay", data: { mark: 'end' },
+    headers: {
+      [HEADER_KEY]: HEADER_KEY,
+    },
+  }).then((res) => {
+    expect(res).toStrictEqual('delay7-end')
+  })
+  // g.get(0)
+  //   .get('/weaknet/delay', { data: { mark: 'start' } })
+  //   .then(res => {
+  //     // 当请求被取消时会返回一个 {message:string}  object
+  //     // @ts-ignore
+  //     expect(res.message).toStrictEqual('get&/weaknet/delay')
+  //   })
+  // g.get(0)
+  //   .get('/weaknet/delay', { data: { mark: 'end' } })
+  //   .then(res => {
+  //     expect(res).toStrictEqual('delay7-end')
+  //   })
   done()
 })

@@ -46,7 +46,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
     }
 };
 import Axios from 'axios';
-var RetryCore = /** @class */ (function () {
+var RetryCore = (function () {
     function RetryCore(conf, instance) {
         this.conf = conf;
     }
@@ -68,11 +68,11 @@ var RetryCore = /** @class */ (function () {
                         this.checkNumberOfRetries();
                         checkedConf = this.conf;
                         if (!((_a = checkedConf === null || checkedConf === void 0 ? void 0 : checkedConf.config) === null || _a === void 0 ? void 0 : _a[cbKey]))
-                            return [2 /*return*/, this];
-                        return [4 /*yield*/, ((_c = (_b = checkedConf === null || checkedConf === void 0 ? void 0 : checkedConf.config) === null || _b === void 0 ? void 0 : _b[cbKey]) === null || _c === void 0 ? void 0 : _c.call(_b, payload))];
+                            return [2, this];
+                        return [4, ((_c = (_b = checkedConf === null || checkedConf === void 0 ? void 0 : checkedConf.config) === null || _b === void 0 ? void 0 : _b[cbKey]) === null || _c === void 0 ? void 0 : _c.call(_b, payload))];
                     case 1:
                         _d.sent();
-                        return [2 /*return*/, this];
+                        return [2, this];
                 }
             });
         });
@@ -87,14 +87,14 @@ var RetryCore = /** @class */ (function () {
                         this.checkNumberOfRetries();
                         checkedConf = this.conf;
                         if (!((_a = checkedConf === null || checkedConf === void 0 ? void 0 : checkedConf.config) === null || _a === void 0 ? void 0 : _a['retryBeforeCb']))
-                            return [2 /*return*/, this];
-                        if (!((_b = this === null || this === void 0 ? void 0 : this.conf) === null || _b === void 0 ? void 0 : _b.config)) return [3 /*break*/, 2];
-                        return [4 /*yield*/, ((_d = (_c = checkedConf === null || checkedConf === void 0 ? void 0 : checkedConf.config) === null || _c === void 0 ? void 0 : _c['retryBeforeCb']) === null || _d === void 0 ? void 0 : _d.call(_c, checkedConf.config))];
+                            return [2, this];
+                        if (!((_b = this === null || this === void 0 ? void 0 : this.conf) === null || _b === void 0 ? void 0 : _b.config)) return [3, 2];
+                        return [4, ((_d = (_c = checkedConf === null || checkedConf === void 0 ? void 0 : checkedConf.config) === null || _c === void 0 ? void 0 : _c['retryBeforeCb']) === null || _d === void 0 ? void 0 : _d.call(_c, checkedConf.config))];
                     case 1:
                         conf = _e.sent();
                         this.setConf(conf);
-                        return [2 /*return*/, this];
-                    case 2: return [2 /*return*/, this];
+                        return [2, this];
+                    case 2: return [2, this];
                 }
             });
         });
@@ -116,19 +116,19 @@ var RetryCore = /** @class */ (function () {
                         index = 0;
                         _b.label = 1;
                     case 1:
-                        if (!(index < ((_a = conf.config) === null || _a === void 0 ? void 0 : _a.numberOfRetries))) return [3 /*break*/, 4];
-                        return [4 /*yield*/, Promise.allSettled([Axios(__assign({}, conf.config))])];
+                        if (!(index < ((_a = conf.config) === null || _a === void 0 ? void 0 : _a.numberOfRetries))) return [3, 4];
+                        return [4, Promise.allSettled([Axios(__assign({}, conf.config))])];
                     case 2:
                         result = _b.sent();
                         if (result[0].status === 'rejected') {
-                            return [3 /*break*/, 3];
+                            return [3, 3];
                         }
                         returnVal.push(result[0].value);
-                        return [3 /*break*/, 4];
+                        return [3, 4];
                     case 3:
                         index++;
-                        return [3 /*break*/, 1];
-                    case 4: return [2 /*return*/, returnVal[0]];
+                        return [3, 1];
+                    case 4: return [2, returnVal[0]];
                 }
             });
         });

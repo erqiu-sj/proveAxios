@@ -1,4 +1,3 @@
-// 只监听某项插件调用
 export function onlyListenForAPluginCall(ops) {
     if ((ops === null || ops === void 0 ? void 0 : ops.debugPlugInNameOnly) && (ops === null || ops === void 0 ? void 0 : ops.isDebugPlugInNameOnly) && ((ops === null || ops === void 0 ? void 0 : ops.debugPlugInNameOnly) === ops.displayName)) {
         console.log(ops.tips);
@@ -6,7 +5,6 @@ export function onlyListenForAPluginCall(ops) {
     }
     return false;
 }
-// 检查安装器
 export function checkInstaller(dispayName, ops) {
     if (onlyListenForAPluginCall(Object.assign(Object.assign({ displayName: dispayName }, ops), { tips: `checking the installer(${ops === null || ops === void 0 ? void 0 : ops.installType}) for the ${ops === null || ops === void 0 ? void 0 : ops.debugPlugInNameOnly}  (${getTime()})` }))) {
         return;
@@ -18,7 +16,6 @@ export function checkInstaller(dispayName, ops) {
     console.log(`checking the installer(${ops === null || ops === void 0 ? void 0 : ops.installType}) for the ${dispayName} (${getTime()})`);
     return;
 }
-// 检查拦截器 
 export function checkInterceptor(dispayName, ops) {
     if (onlyListenForAPluginCall(Object.assign(Object.assign({ tips: `checking the interceptor(${ops === null || ops === void 0 ? void 0 : ops.interceptorType}) for the ${ops === null || ops === void 0 ? void 0 : ops.debugPlugInNameOnly} (${getTime()})` }, ops), { displayName: dispayName }))) {
         return;
@@ -30,7 +27,6 @@ export function checkInterceptor(dispayName, ops) {
     console.log(`checking the interceptor(${ops === null || ops === void 0 ? void 0 : ops.interceptorType}) for the ${dispayName}  (${getTime()})`);
     return;
 }
-// 监听安装器执行
 export function monitorInstallerExecution(displayName, ops) {
     if (onlyListenForAPluginCall(Object.assign(Object.assign({}, ops), { tips: `(${ops === null || ops === void 0 ? void 0 : ops.debugPlugInNameOnly})installer is executing (${getTime()})`, displayName: displayName }))) {
         return;
@@ -42,7 +38,6 @@ export function monitorInstallerExecution(displayName, ops) {
     console.log(`runing the installer(${ops === null || ops === void 0 ? void 0 : ops.installerType}) for the ${displayName} (${getTime()})`);
     return;
 }
-// 监听插件拦截器执行
 export function monitorPluginInterceptorExecution(displayName, ops) {
     if (onlyListenForAPluginCall(Object.assign(Object.assign({}, ops), { tips: `(${ops === null || ops === void 0 ? void 0 : ops.debugPlugInNameOnly})Interceptor is executing (${getTime()})`, displayName: displayName }))) {
         return;

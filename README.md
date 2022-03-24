@@ -1,3 +1,11 @@
+<!--
+ * @Author: 邱狮杰
+ * @Date: 2022-02-27 13:28:16
+ * @LastEditTime: 2022-03-24 22:17:01
+ * @Description:
+ * @FilePath: /proveAxios/README.md
+-->
+
 # proveAxios
 
 ## install
@@ -22,7 +30,7 @@ until his appearance --- proveAxios
 
 ## use
 
-- [Best Practice 1 - How to elegantly configure to cancel repeated requests?](/docs/cancel.md)
+- [Best Practice 1 - How to elegantly configure to cancel repeated requests (or cache requests) ?](/docs/cancel.md)
 
 - [Best Practice 2 - How to configure retry requests gracefully](/docs/retry.md)
 

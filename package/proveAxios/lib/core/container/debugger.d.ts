@@ -13,9 +13,6 @@ export declare class Debugger {
     constructor(ops?: DebuggerProps);
     protected withDebuggerCall(callback?: () => void): void;
     protected withDebugPlugInNameOnlyCall(callback: () => void, displayName?: string): void;
-    /**
-       * @description 包装 debugger 所需参数
-       */
     protected parametersRequiredToWrapTheDebugger(): debugPlugInConfiguration;
     protected checkInstallerHandler(installType: decisionInstaller, displayName?: string): void;
     protected checkInterceptorHandler(type: interceptorsKey, displayName?: string): void;

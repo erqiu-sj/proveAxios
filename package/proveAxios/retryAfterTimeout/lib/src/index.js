@@ -43,7 +43,7 @@ var __generator = (this && this.__generator) || function (thisArg, body) {
 import { decisionInstaller, dynamicModule, dynamicModuleErrorInstall, interceptorsResponseFail, priority } from '@zealforchange/proveaxios';
 import { RetryCore } from './core';
 var retryAfterTimeoutDisplayName = 'retryAfterTimeout';
-var RetryAfterTimeout = /** @class */ (function () {
+var RetryAfterTimeout = (function () {
     function RetryAfterTimeout() {
     }
     RetryAfterTimeout.resErr = function (err) {
@@ -51,18 +51,18 @@ var RetryAfterTimeout = /** @class */ (function () {
             var retryBeforeCb, retrying;
             return __generator(this, function (_a) {
                 switch (_a.label) {
-                    case 0: return [4 /*yield*/, new RetryCore(err).retryBeforeCbCb()];
+                    case 0: return [4, new RetryCore(err).retryBeforeCbCb()];
                     case 1:
                         retryBeforeCb = _a.sent();
-                        return [4 /*yield*/, retryBeforeCb.retrying()];
+                        return [4, retryBeforeCb.retrying()];
                     case 2:
                         retrying = _a.sent();
-                        return [4 /*yield*/, retryBeforeCb.runCallBack('retryAfterCb', retrying)];
+                        return [4, retryBeforeCb.runCallBack('retryAfterCb', retrying)];
                     case 3:
                         _a.sent();
                         if (!retrying)
-                            return [2 /*return*/, null];
-                        return [2 /*return*/, retrying];
+                            return [2, null];
+                        return [2, retrying];
                 }
             });
         });

@@ -15,11 +15,6 @@ export class InitializeContainerUtils extends Debugger {
     constructor(res) {
         super(res);
     }
-    /**
-     * @description 实例化
-     * @param List
-     * @returns
-     */
     initializationList(List) {
         this.withDebuggerCall(() => {
             console.log(debuggerTips.initializeTheInstanceAndReadThePlugIn);
@@ -37,11 +32,6 @@ export class InitializeContainerUtils extends Debugger {
             };
         });
     }
-    /**
-     * @description 检查安装器
-     * 1. 插件有拦截器 主体没有拦截器 即插件拦截器生效
-     *
-     */
     checkTheInstaller(List) {
         return List.map(item => {
             item.pluginList.map(pluginItem => {
@@ -59,14 +49,10 @@ export class InitializeContainerUtils extends Debugger {
                     checkInterceptorDecorator.responseSuccessCb === undefined,
                 ];
                 const emptyInterceptor = checkList.every(checkItem => checkItem);
-                // 空拦截器器 不验证拦截安装器
                 if (emptyInterceptor)
                     return;
-                // 存在拦截器 验证安装器
-                // 空直接报错
                 if (!pluginItem.installer)
                     throw new Error('please check if the interception installer is bound');
-                // 判断对应的拦截器是否有对应的安装器
                 this.checkInstallerHandler(decisionInstaller.installReqSuc, pluginItem.displayName);
                 if (!checkInterceptorCorrespondingInstaller(checkInterceptorDecorator.requestSuccessCb, pluginItem.installer.installReqSuc))
                     throw new Error('missing the corresponding request successful installer');
@@ -84,11 +70,6 @@ export class InitializeContainerUtils extends Debugger {
             return Object.assign({}, item);
         });
     }
-    /**
-     * @description 解析拦截器
-     * @param List
-     * @returns
-     */
     filterEmptyInterceptor(List) {
         return List.map((item) => {
             const requestSuccessCbList = item.pluginList
@@ -131,24 +112,15 @@ export class InitializeContainerUtils extends Debugger {
                 this.checkInterceptorHandler(interceptorsKey.responseFail, nextPlugin.displayName);
                 return (_a = nextPlugin.interceptor) === null || _a === void 0 ? void 0 : _a.response.failCb;
             });
-            return Object.assign({ 
-                // @ts-ignore
-                requestSuccessCbList,
-                // @ts-ignore
+            return Object.assign({ requestSuccessCbList,
                 requestFailCbList,
-                // @ts-ignore
                 responseSuccessCbList,
-                // @ts-ignore
                 responseFailCbList }, item);
         });
     }
     configBindExtraFields(instance, key, val) {
         Reflect.set(instance.defaults, key, val);
     }
-    /**
-     * @description 绑定拦截器
-     * @param List
-     */
     bindingInterceptor(List) {
         return List.map((item, itemIndex) => {
             item.instance.interceptors.response.use((response) => __awaiter(this, void 0, void 0, function* () {

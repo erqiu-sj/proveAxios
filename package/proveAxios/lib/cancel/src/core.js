@@ -1,52 +1,56 @@
 import axios from 'axios';
+import { isItExpired } from './cache';
 function isFunction(val) {
     return typeof val === 'function';
 }
 let pendingMap = new Map();
-const getPendingUrl = (config) => [config.method, config.url].join('&');
-// 多次请求则取消上一次请求头
+export const cutter = "$";
+export const expirationNull = 'expirationNull';
+export const notExpiredCode = 'notExpiredCode';
+export const expirationCode = 'expirationCode';
 export const HEADER_KEY = 'extraCancellation';
 export class AxiosCanceler {
-    /**
-     * Add request
-     * @param {Object} config
-     */
+    constructor(rule) {
+        this.cancelRequestRule = () => [];
+        this.cancelRequestRule = rule;
+    }
+    setCancelRequestRule(handler) {
+        this.cancelRequestRule = handler;
+    }
     addPending(config) {
         this.removePending(config);
-        const url = getPendingUrl(config);
+        let url = this.cancelRequestRule(config).join(cutter);
         config.cancelToken =
             config.cancelToken ||
                 new axios.CancelToken(cancel => {
                     if (!pendingMap.has(url)) {
-                        // If there is no current request in pending, add it
                         pendingMap.set(url, cancel);
                     }
                 });
     }
-    /**
-     * @description: Clear all pending
-     */
     removeAllPending() {
         pendingMap.forEach(cancel => {
             cancel && isFunction(cancel) && cancel();
         });
         pendingMap.clear();
     }
-    /**
-     * Removal request
-     * @param {Object} config
-     */
     removePending(config) {
-        const url = getPendingUrl(config);
+        let url = this.cancelRequestRule(config).join(cutter);
         if (pendingMap.has(url)) {
             const cancel = pendingMap.get(url);
+            console.log('what end');
             cancel && cancel(url);
             pendingMap.delete(url);
         }
     }
-    /**
-     * @description: reset
-     */
+    getExpiration(url) {
+        const expiration = url.split(cutter).at(-1);
+        if (!expiration)
+            return null;
+        if (expiration === expirationNull)
+            return true;
+        return isItExpired(parseInt(expiration));
+    }
     reset() {
         pendingMap = new Map();
     }

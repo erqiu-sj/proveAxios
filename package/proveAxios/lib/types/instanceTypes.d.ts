@@ -33,13 +33,7 @@ export declare type instanceConfig<C extends object> = Partial<{
         };
     };
 }>;
-/**
- * @description 拦截器联合类型
- */
 export declare type interceptorCollectionTypes = interceptorsResponseFailTypes | interceptorsResponseSuccessTypes | interceptorsRequestFailTypes | interceptorsRequestSuccessTypes<object>;
-/**
- * @description 安装器联合类型
- */
 export declare type installerCollectionTypes<C extends object> = mergeErrorInstaller | mergeSuccessfulInstaller<customConfiguration<C>> | mergeSuccessfulInstaller<AxiosResponse>;
 export declare type mergeErrorInstaller = (err: any) => boolean;
 export declare type mergeSuccessfulInstaller<T> = (conf: T) => boolean;

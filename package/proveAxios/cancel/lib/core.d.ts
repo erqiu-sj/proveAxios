@@ -1,22 +1,16 @@
-import type { AxiosRequestConfig } from 'axios';
+import { CancelConfig, updateCancelConf } from './index';
+export declare const cutter = "$";
+export declare const expirationNull = "expirationNull";
+export declare const notExpiredCode = "notExpiredCode";
+export declare const expirationCode = "expirationCode";
 export declare const HEADER_KEY = "extraCancellation";
 export declare class AxiosCanceler {
-    /**
-     * Add request
-     * @param {Object} config
-     */
-    addPending(config: AxiosRequestConfig): void;
-    /**
-     * @description: Clear all pending
-     */
+    protected cancelRequestRule: updateCancelConf['cancelRequestRule'];
+    constructor(rule: updateCancelConf['cancelRequestRule']);
+    setCancelRequestRule(handler: updateCancelConf['cancelRequestRule']): void;
+    addPending(config: CancelConfig): void;
     removeAllPending(): void;
-    /**
-     * Removal request
-     * @param {Object} config
-     */
-    removePending(config: AxiosRequestConfig): void;
-    /**
-     * @description: reset
-     */
+    removePending(config: CancelConfig): void;
+    getExpiration(url: string): boolean | null;
     reset(): void;
 }
